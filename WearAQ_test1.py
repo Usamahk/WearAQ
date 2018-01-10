@@ -16,9 +16,9 @@ import pandas as pd
 import folium
 import seaborn as sns
 import matplotlib.pyplot as plt
+import random
 
-
-os.chdir("/Users/Usamahk/Admin/Work/Thingful/WearAQ 2.0")
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0")
 
 print(os.listdir())
 
@@ -168,4 +168,97 @@ clf.fit(df_s, 'NOX')
 """
 
 
+from __future__ import division
+import math
+
+lat = 51.523325
+long = -0.013044
+
+radius = 20
+
+"""
+Use the Haversine formula
+"""
+
+lng_min = long - radius / abs(math.cos(math.radians(lat)) * 69)
+lng_max = long + radius / abs(math.cos(math.radians(lat)) * 69)
+lat_min = lat - (radius / 69)
+lat_max = lat + (radius / 69)
+
+print ('lng (min/max): %f %f' % (lng_min, lng_max))
+print ('lat (min/max): %f %f' % (lat_min, lat_max))
+
+dist_lng = lng_max-lng_min
+dist_lat = lat_max-lat_min
+
+lats = np.random.rand(3)
+longs = np.random.rand(3)
+
+lat_out = (lats*dist_lat)+lat_min
+long_out = (longs*dist_lng)+lng_min
+
+import proximityhash
+
+"""
+Working on some plotting
+"""
+
+import gmplot
+
+gmap = gmplot.GoogleMapPlotter(37.428, -122.145, 16)
+
+latitudes = 37.428
+longitudes = -122.145
+
+gmap.plot(latitudes, longitudes, 'cornflowerblue', edge_width=10)
+gmap.scatter(more_lats, more_lngs, '#3B0B39', size=40, marker=False)
+gmap.scatter(marker_lats, marker_lngs, 'k', marker=True)
+gmap.heatmap(heat_lats, heat_lngs)
+
+gmap.draw("mymap.html")
+
+import math
+
+def makeGrid(maxLat, maxLon, minLat, minLon, resX, resY):
+	"""
+	makeGrid generates a grid of <resX> x <resY> resolution
+	mapped on a boundig box described by <maxLat>, <maxLon>, <minLat>, <minLon>
+	"""
+
+	# TO VALIDATE!
+	# latitude ranages from -90 to +90
+	# latitude ranages from -180 to +180
+
+	# the grid array
+	grid = []
+
+	# find lat absolute distance
+	totolLat = abs(maxLat - minLat)
+	
+	# find lon absolute distance
+	totolLon = abs(maxLon - minLon)
+
+	# divide distances by gurd resolution
+	gridBlockWidth = totolLat/resX
+	gridBlockHeight = totolLon/resY
+
+	# get grid blocks coordinates
+	for i in range(resY):
+		for j in range(resX):
+			x1 = minLat + (gridBlockWidth * j)
+			x2 = minLat + (gridBlockWidth * (j+1))
+
+			y1 = maxLon - (gridBlockHeight * i)
+			y2 = maxLon - (gridBlockHeight * (i+1))
+
+			currentBlock = { 'minX': roundTo3DecimalP(x1), 'minY': roundTo3DecimalP(y1), 'maxX': roundTo3DecimalP(x2), 'maxY': roundTo3DecimalP(y2) }
+
+			grid.append(currentBlock)
+
+
+	return grid
+
+def roundTo3DecimalP(c):
+
+	return math.ceil(c*1000)/1000
 
