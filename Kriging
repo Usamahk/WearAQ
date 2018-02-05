@@ -7,7 +7,7 @@ import numpy as np
 from pyKriging import kriging
 from pyKriging.samplingplan import samplingplan
 
-@author: Usamahk
+
 def calcuatemeanMSE(self, p2s=200, points=None):
 #        This function calculates the mean MSE metric of the model by evaluating MSE at a number of points.
 #        :param p2s: Points to Sample, the number of points to sample the mean squared error at. Ignored if the points argument is specified
