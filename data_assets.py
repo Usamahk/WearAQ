@@ -25,14 +25,72 @@ r = requests.get(url)
 
 data = r.json()
 
+## AQ data 
+
 num_sensors = len(data[1]["features"])
+
+df = []
 
 for i in range(num_sensors):
     lon = data[1]["features"][i]["geometry"]["coordinates"][0]
     lat = data[1]["features"][i]["geometry"]["coordinates"][1]
     ID = data[1]["features"][i]["properties"]["id"]
-    print(lat,lon,ID)
+    df.append({'Lon':lon, 'Lat':lat, 'ID':ID})
 
+df = pd.DataFrame(df)
+
+## Traffic data
+
+num_sensors2 = len(data[0]["features"])
+
+df2 = []
+
+for i in range(num_sensors2):
+    lon = data[0]['features'][i]['geometry']['coordinates'][0]
+    lat = data[0]['features'][i]['geometry']['coordinates'][1]
+    ID = data[0]['features'][i]['properties']['id']
+    df2.append({'Lon':lon, 'Lat':lat, 'ID':ID})
+    
+df2 = pd.DataFrame(df2)
+
+
+## df contains list of all sensors in London - including Tower Hamlets
+## Plot on map
+
+import folium
+
+map_osm = folium.Map(location = [51.5203,0.0293])
+df.apply(lambda row:folium.CircleMarker(location=[row["Lat"], row["Lon"]])
+                                             .add_to(map_osm), axis=1)
+
+map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map.html')
+
+map_osm = folium.Map(location = [51.5203,0.0293])
+df2.apply(lambda row:folium.CircleMarker(location=[row["Lat"], row["Lon"]])
+                                             .add_to(map_osm), axis=1)
+
+map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map_traffic.html')
+
+## Pull the data from Organicity, each sensor
+
+request2 = requests.get("http://discovery.organicity.eu/v0/assets/urn:oc:entity:london:aqn:TH4")
+request3 = requests.get("http://discovery.organicity.eu/v0/assets/urn:oc:entity:london:aqn:TH2")
+request4 = requests.get("http://discovery.organicity.eu/v0/assets/urn:oc:entity:london:aqn:TH5")
+request5 = requests.get("http://discovery.organicity.eu/v0/assets/urn:oc:entity:london:aqn:TH6")
+
+data_2 = request2.json()
+
+names = data_2["data"]["attributes"]["data"]
+names.keys()
+
+key_vars=[]
+
+for key in names.keys(): 
+    key_vars.append({"key":key})
+
+key_vars.sort()
+
+key_vars = pd.DataFrame(key_vars)
 
 ### Assets from Thingful
 
@@ -45,3 +103,4 @@ headers = {"content-type": "application/json", "Accept-Charset": "UTF-8"}
 r = requests.get("https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700")
 
 os.path.expanduser(path)
+
