@@ -19,6 +19,8 @@ request3 = requests.get("http://discovery.organicity.eu/v0/assets/urn:oc:entity:
 
 ## All Assests for tower hamlets
 
+url3 = "https://discovery.organicity.eu/v0/assets/geo/search?lat=51.5203&lon=0.0293&radius=0&km=true&service=aqn"
+
 url = "http://discovery.organicity.eu/v0/assets/geo/search?lat=51.5203&lon=0.0293&radius=1000"
 
 r = requests.get(url)
@@ -92,15 +94,27 @@ key_vars.sort()
 
 key_vars = pd.DataFrame(key_vars)
 
+dPM25 = key_vars.iloc[4,0]
+dPM10 = key_vars.iloc[6,0]
+dNO =key_vars.iloc[7,0]
+
 ### Assets from Thingful
 
 lat = 51.5203
 lon = 0.0293
 
 url2 = "https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700"
+
 ## payload = open("request.json")
-headers = {"content-type": "application/json", "Accept-Charset": "UTF-8"}
-r = requests.get("https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700")
+
+headers = {"Authorization": "2f67bce7-4454-4a6d-a44d-245a68a8d2b9"}
+r = requests.get("https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700", params = headers)
+
+url = "https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700"
+headers = {'Authorization': 'Bearer 2f67bce7-4454-4a6d-a44d-245a68a8d2b9'}
+r = requests.post(url, headers=headers)
+
+thing_data = r.json()
 
 os.path.expanduser(path)
 
