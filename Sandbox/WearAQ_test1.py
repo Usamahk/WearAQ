@@ -18,7 +18,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import random
 
-os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/Sandbox/WearAQ 2.0")
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/Sandbox")
 
 print(os.listdir())
 

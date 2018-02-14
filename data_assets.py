@@ -11,6 +11,8 @@ import pandas as pd
 import os
 import json
 
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0")
+
 ## Assets from Organicity
 
 request1 = requests.get("https://discovery.organicity.eu/v0/assets/geo/search?city=Towerhamlets&type=urn:oc:entityType:iotdevice")
@@ -98,23 +100,40 @@ dPM25 = key_vars.iloc[4,0]
 dPM10 = key_vars.iloc[6,0]
 dNO =key_vars.iloc[7,0]
 
-### Assets from Thingful
+### Assets from Thingful - Tower Hamlets AQ index
 
 lat = 51.5203
 lon = 0.0293
 
-url2 = "https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700"
+url = "https://thingful-pipes.herokuapp.com/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700"
+headers = {'Authorization': 'Bearer '} ## place token
+#r = requests.get(url, headers=headers)
 
-## payload = open("request.json")
+## ensure token is set in right environment
+#token = os.getenv("PIPES_TOKEN")
+#if token is None:
+#    raise TypeError("PIPES_TOKEN must be set in the environment")
 
-headers = {"Authorization": "2f67bce7-4454-4a6d-a44d-245a68a8d2b9"}
-r = requests.get("https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700", params = headers)
+## set headers and fire request
+#headers = {'Authorization': 'Bearer {}'.format(token)}
 
-url = "https://datapipes.thingful.net/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700"
-headers = {'Authorization': 'Bearer 2f67bce7-4454-4a6d-a44d-245a68a8d2b9'}
-r = requests.post(url, headers=headers)
+resp = requests.get(url, headers=headers)
 
-thing_data = r.json()
+resp_th = resp
 
-os.path.expanduser(path)
+### Assets from Thingful - London AQ index
+
+url = "https://datapipes.thingful.net/api/run/3ed6adc1-987a-45d7-8d4d-f952e5e7122c"
+headers = {'Authorization': 'Bearer '}
+
+resp = requests.get(url, headers=headers)
+
+resp_london = resp
+
+## log json response
+print(resp.json())
+
+thing_data = resp.json()
+
+
 
