@@ -12,8 +12,9 @@ import os
 import json
 
 # =============================================================================
-# Tower Hamlets
+# Tower Hamlets information
 # 
+# Bounding box:
 # North Latitude: 51.544686 South Latitude: 51.484503 East Longitude: 0.009864 West Longitude: -0.080190
 # 
 # geo_lat = 51.523325
@@ -112,8 +113,8 @@ dNO =key_vars.iloc[7,0]
 lat = 51.5203
 lon = 0.0293
 
-url = "https://thingful-pipes.herokuapp.com/api/run/4e9ce2e7-50b9-4fdb-a491-ff4d6da72700"
-headers = {'Authorization': 'Bearer 2f67bce7-4454-4a6d-a44d-245a68a8d2b9'}
+url = "https://thingful-pipes.herokuapp.com/api/run/token"
+headers = {'Authorization': 'token'}
 
 resp = requests.get(url, headers=headers)
 
@@ -136,8 +137,8 @@ df_th = pd.DataFrame(df_th)
 
 ### Assets from Thingful - London AQ index
 
-url = "https://thingful-pipes.herokuapp.com/api/run/3ed6adc1-987a-45d7-8d4d-f952e5e7122c"
-headers = {'Authorization': 'Bearer 2f67bce7-4454-4a6d-a44d-245a68a8d2b9'}
+url = "https://thingful-pipes.herokuapp.com/api/run/token"
+headers = {'Authorization': 'token'}
 
 resp = requests.get(url, headers=headers)
 
