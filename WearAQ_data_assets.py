@@ -87,7 +87,7 @@ aq_organicity_result = pd.concat([df,df_val], axis = 1)
 ### Assets from Thingful - London AQ index
 
 url = "https://thingful-pipes.herokuapp.com/api/run/3042858c-284c-4d8e-b62b-62db014def87"
-headers = {'Thingful-Authorization': ''} # add Token
+headers = {'Thingful-Authorization': ''} # add token
 
 resp = requests.get(url, headers=headers)
 
@@ -125,10 +125,19 @@ for i in range(8, 32):
 
 data_all = data_all.apply(pd.to_numeric, errors = 'coerce')
 
+## Subset Tower Hamlets data
+
+data_th = data_all[(data_all.Lat < 51.544686) & (data_all.Lat >51.484503) & 
+         (data_all.Lon > -0.080190) & (data_all.Lon < 0.009864)].reset_index(drop=True)
+
+data_th = data_th.drop_duplicates(subset = 'Lat')
+
 import folium
 
 map_osm = folium.Map(location = [51.5203,0.0293])
 data_all.apply(lambda row:folium.CircleMarker(location=[row["Lat"], row["Lon"]])
                                              .add_to(map_osm), axis=1)
+
+
 
 map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map_all.html')
