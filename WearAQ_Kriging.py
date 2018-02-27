@@ -33,7 +33,7 @@ for i in range(5):
         print('Adding point {}'.format(point))
         k.addPoint(point, y[0])
     k.train(optimizer=optimizer)
-    k.snapshot()
+    
 
 print('Now plotting final results...')
 k.plot() # plot with new points
