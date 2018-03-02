@@ -87,7 +87,7 @@ aq_organicity_result = pd.concat([df,df_val], axis = 1)
 ### Assets from Thingful - London AQ index
 
 url = "https://thingful-pipes.herokuapp.com/api/run/3042858c-284c-4d8e-b62b-62db014def87"
-headers = {'Thingful-Authorization': ''} # add token
+headers = {'Thingful-Authorization': 'Bearer 2f67bce7-4454-4a6d-a44d-245a68a8d2b9'} # add token
 
 resp = requests.get(url, headers=headers)
 
@@ -135,9 +135,7 @@ data_th = data_th.drop_duplicates(subset = 'Lat')
 import folium
 
 map_osm = folium.Map(location = [51.5203,0.0293])
-data_all.apply(lambda row:folium.CircleMarker(location=[row["Lat"], row["Lon"]])
+data_th.apply(lambda row:folium.CircleMarker(location=[row["Lat"], row["Lon"]])
                                              .add_to(map_osm), axis=1)
-
-
 
 map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map_all.html')

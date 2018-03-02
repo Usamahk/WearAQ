@@ -41,7 +41,7 @@ def invDist(xv,yv,values,xsize=100,ysize=100,power=2,smoothing=0):
 #Creating some data, with each coordinate and the values stored in separated lists
 x = [-0.008356,-0.042199,-0.019934,-0.033470,-0.013044]
 y = [51.515017,51.522501,51.510117,51.540364,51.523325]
-values = [4,8,6,6,7]
+values = [10,2,3,6,7]
 
 #Creating the output grid (100x100, in the example)
 # np.linspace(start, stop, n)

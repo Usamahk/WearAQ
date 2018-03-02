@@ -71,7 +71,7 @@ Experimenting with different pairwise plots
 
 l = sns.pairplot(df, vars=['NO','NO2','NOX','O3','PM10','PM2.5'])
 g =  sns.pairplot(df.head(500), diag_kind='kde', kind = 'reg', 
-                  vars=['NOX','O3','PM2.5'])
+                  vars=['NO','PM10','PM2.5'])
 
 h =  sns.pairplot(df.head(500), diag_kind='kde', vars=['NOX','O3','PM2.5'])
 

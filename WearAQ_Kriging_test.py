@@ -34,7 +34,7 @@ X = np.array([[ -0.008356,  51.515017],
 
 
 ## Need to normalize the data - maybe on a 1-5 scale or not
-y = np.array([4,8,6,6,7])
+y = np.array([4,8,6,2,7])
 
 # We can choose between a ga and a pso here
 optimizer = 'ga'
