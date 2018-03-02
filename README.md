@@ -9,7 +9,7 @@ To get an idea of the environment, we're pulling data from open source sensors a
 - London Air Quality Network
 This file holds the endpoints and parses through the response to pull necessary datapoints
 
-### WearAQ_model
+### WearAQ_LAQN_data
 Since there isn't the largest spread of AQ data in the region, we need to look at other sources such as traffic and weather. This file holds a model used to predict AQ from these external factors
 
 ### WearAQ_kriging
@@ -19,6 +19,13 @@ Found a few sources explaining this in a little more detail here:
 - The wiki: https://en.wikipedia.org/wiki/Kriging
 - A better explanation: http://gisgeography.com/kriging-interpolation-prediction/
 
+
 ## Folders
 ### Sandbox
 Just somewhere I play around with the data, with some incomplete ideas that I don't wanna throw away just yet
+
+### Data
+Data from the LAQN - houses 7 datasets in and around tower hamlets
+
+### Images
+Images and maps generated from code in exp
