@@ -189,6 +189,8 @@ X = np.array([[ -0.008356,  51.515017],
        [ -0.033470,  51.540364],
        [ -0.013044,  51.523325]])
 
+#y = np.array([10,8,10,2,10,5,4]) <- this gives a good result for demo    
+    
 
 ## Need to normalize the data - maybe on a 1-5 scale or not
 y = np.array([4,8,6,6,7])
