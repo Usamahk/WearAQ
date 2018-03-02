@@ -48,6 +48,7 @@ for i in range(3):
         k.addPoint(point, y[0])
     k.train(optimizer=optimizer)
 
+#########
 
 print('Now plotting final results...')
 k.plot() # plot with new points
