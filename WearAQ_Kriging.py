@@ -10,8 +10,11 @@ import numpy as np
 import pandas as pd
 from pyKriging import kriging
 
+# =============================================================================
+# Set up the locations of the intial sensors from Tower Hamlets and Newham
+# =============================================================================
 
-############
+## Locations of the sensors in question
 
 X = np.array([[ -0.008356,  51.515017],
        [ -0.042199,  51.522501],
@@ -21,7 +24,7 @@ X = np.array([[ -0.008356,  51.515017],
        [  0.014595,  51.514581],
        [ -0.002081,  51.537683]])
 
-y = np.array(data_all['NO'])
+y = np.array(data_all['NO']) # saved in env - from WearAQ_LAQN_data
 
 # =============================================================================
 # First pass through model
