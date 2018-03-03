@@ -1,14 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Feb 15 17:13:03 2018
-
-@author: Usamahk
-"""
-
 import os
 import numpy as np
 import pandas as pd
+
+
 import folium
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -19,27 +13,38 @@ os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/data")
 print(os.listdir())
 
 ## read in training data
-blackwell = pd.read_csv("Tower Hamlets - Blackwell.csv")
-mile_end = pd.read_csv("Tower Hamlets - Mile End.csv")
-poplar = pd.read_csv("Tower Hamlets - Poplar.csv")
-victoria_park = pd.read_csv("Tower Hamlets - Victoria Park.csv")
+blackwall = pd.read_csv("Blackwall.csv")
+millwall_park = pd.read_csv("Millwall Park.csv")
+wren_close = pd.read_csv("Wren Close.csv")
+cam_road = pd.read_csv("Cam Road.csv")
 
-## combine training data
-## df = pd.concat([blackwell,mile_end,poplar,victoria_park])
+frames = [blackwall, millwall_park, wren_close, cam_road]
 
+df_learn = pd.concat(frames)
 
-df = blackwell.pivot(index='ReadingDateTime',
+# datetime = pd.to_datetime(df_learn["ReadingDateTime"]) # use if datetime not saved
+# datetime.to_csv('datetime.csv')
+
+datetime = pd.read_csv('datetime.csv')
+
+df_learn['Month'] = datetime.apply(lambda x: x.month)
+df_learn['Day'] = datetime.apply(lambda x: x.day)
+df_learn['Hour'] = datetime.apply(lambda x: x.hour)
+
+df_learn1 = df_learn.reset_index(drop=True)
+
+df_analyze = df_learn1.pivot(index='ReadingDateTime',
                             columns='Species',
                             values='Value')
 
-df = df.dropna(how = 'any')
+datetime2 = pd.to_datetime(blackwall['ReadingDateTime'])
 
-num = len(df)
+df_b = blackwall
 
-df2 = df
+df_b['Month'] = datetime2.apply(lambda x: x.month)
+df_b['Day'] = datetime2.apply(lambda x: x.day)
+df_b['Hour'] = datetime2.apply(lambda x: x.hour)
 
-for i in range(num):
-    if df2.iloc[i,0] < 
-
-
-
+df_analyze =  df_b.pivot(index=['Hour','Day','Month'],
+                            columns='Species',
+                            values='Value')
