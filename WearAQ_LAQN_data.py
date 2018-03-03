@@ -169,9 +169,14 @@ frames = [blackwall, millwall_park, wren_close, cam_road]
 
 df_learn = pd.concat(frames)
 
-datetime = pd.to_datetime(df_learn["ReadingDateTime"])
+# datetime = pd.to_datetime(df_learn["ReadingDateTime"])
+# datetime.to_csv('datetime.csv')
+
+datetime = pd.read_csv('datetime.csv')
 
 df_learn['Month'] = datetime.apply(lambda x: x.month)
+df_learn['Day'] = datetime.apply(lambda x: x.day)
+df_learn['Hour'] = datetime.apply(lambda x: x.hour)
 
 # =============================================================================
 # Get data for day in question
@@ -181,47 +186,32 @@ all = [df_1_avg, df_2_avg, df_3_avg, df_4_avg, df_5_avg, df_6_avg, df_7_avg ]
 
 df_all = []
 
+hour = 12 # Set hour
+day = 7 # Set day
+month = 3 # Set month
+
 for i in range(7):
-    df_all.append(all[i].loc[(12,7,3)])
+    df_all.append(all[i].loc[(hour,day,month)])
     
 data_all = pd.DataFrame(df_all)
 
+# =============================================================================
+# Tests and analysis of data
+# =============================================================================
 
-
-latitude = [51.515017,51.522501,51.510117,51.540364, 51.488903, 51.514581, 51.537683]
-longitude = [-0.008356,-0.042199,-0.019934,-0.033470, -0.013047, 0.014595, -0.002081]
-
-
-blackwell_ = blackwell.pivot(index='ReadingDateTime',
+blackwall_analysis = blackwall.pivot(index='ReadingDateTime',
                             columns='Species',
                             values='Value')
 
-df = blackwell_.dropna(how='any')
+df_analysis = blackwall_analysis.dropna(how='any')
 
-blackwell_['times'] = pd.DatetimeIndex(blackwell_.index)
-blackwell_ = blackwell_.reset_index(drop=True)
+#blackwell_['times'] = pd.DatetimeIndex(blackwell_.index)
+# blackwall_analysis = blackwall_analysis.reset_index(drop=True)
 
-l = sns.pairplot(df, vars=['NO','NO2','NOX','O3','PM10','PM2.5'])
+l = sns.pairplot(df_analysis, vars=['NO','NO2','NOX','PM10','PM2.5'])
 
 test = df.groupby([df['times'].dt.hour,df['times'].dt.day,df['times'].dt.month]).mean()
 
 test.loc[(0,5)]
 
 
-
-
-site = ['Blackwell', "Mile End", "Poplar", "Victoria Park", "Millwall Park", "Wren Close", "Cam Road"]
-latitude = [51.515017,51.522501,51.510117,51.540364, 51.488903, 51.514581, 51.537683]
-longitude = [-0.008356,-0.042199,-0.019934,-0.033470, -0.013047, 0.014595, -0.002081]
-
-locations = pd.DataFrame({"site" :site,
-                          "longitude": longitude,
-                          "latitude" : latitude
-                          })
-
-map_osm = folium.Map(location = [51.5203,0.0293])
-locations.apply(lambda row:folium.CircleMarker(location=[row["latitude"], row["longitude"]])
-                                             .add_to(map_osm), axis=1)
-
-
-map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map_th.html')
