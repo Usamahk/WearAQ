@@ -169,7 +169,7 @@ frames = [blackwall, millwall_park, wren_close, cam_road]
 
 df_learn = pd.concat(frames)
 
-# datetime = pd.to_datetime(df_learn["ReadingDateTime"])
+datetime = pd.to_datetime(df_learn["ReadingDateTime"])
 # datetime.to_csv('datetime.csv')
 
 datetime = pd.read_csv('datetime.csv')
@@ -177,6 +177,8 @@ datetime = pd.read_csv('datetime.csv')
 df_learn['Month'] = datetime.apply(lambda x: x.month)
 df_learn['Day'] = datetime.apply(lambda x: x.day)
 df_learn['Hour'] = datetime.apply(lambda x: x.hour)
+
+
 
 # =============================================================================
 # Get data for day in question
@@ -187,7 +189,7 @@ all = [df_1_avg, df_2_avg, df_3_avg, df_4_avg, df_5_avg, df_6_avg, df_7_avg ]
 df_all = []
 
 hour = 12 # Set hour
-day = 7 # Set day
+day = 14 # Set day
 month = 3 # Set month
 
 for i in range(7):
