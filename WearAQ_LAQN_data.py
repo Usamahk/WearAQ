@@ -11,6 +11,7 @@ import numpy as np
 import seaborn as sns
 import folium
 import os
+import timeit
 
 os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/data") # set directory
 
@@ -46,9 +47,11 @@ millwall_park = pd.read_csv("Millwall Park.csv")
 wren_close = pd.read_csv("Wren Close.csv")
 cam_road = pd.read_csv("Cam Road.csv")
 
+
 # =============================================================================
 # Blackwall
 # =============================================================================
+start = timeit.default_timer()
 
 df_1 = blackwall.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -62,9 +65,12 @@ df = df.reset_index(drop=True)
 df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Mile End
 # =============================================================================
+start = timeit.default_timer()
 
 df_2 = mile_end.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -78,9 +84,12 @@ df = df.reset_index(drop=True)
 df_2_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Poplar
 # =============================================================================
+start = timeit.default_timer()
 
 df_3 = poplar.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -94,9 +103,12 @@ df = df.reset_index(drop=True)
 df_3_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Victoria Park
 # =============================================================================
+start = timeit.default_timer()
 
 df_4 = victoria_park.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -110,9 +122,12 @@ df = df.reset_index(drop=True)
 df_4_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Millwall Park
 # =============================================================================
+start = timeit.default_timer()
 
 df_5 = millwall_park.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -126,9 +141,12 @@ df = df.reset_index(drop=True)
 df_5_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Wren Close
 # =============================================================================
+start = timeit.default_timer()
 
 df_6 = wren_close.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -142,9 +160,12 @@ df = df.reset_index(drop=True)
 df_6_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Cam Road
 # =============================================================================
+start = timeit.default_timer()
 
 df_7 = cam_road.pivot(index='ReadingDateTime',
                             columns='Species',
@@ -158,7 +179,8 @@ df = df.reset_index(drop=True)
 df_7_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
 
-
+stop = timeit.default_timer()
+print(stop-start)
 # =============================================================================
 # Do regression so that we can get PM10 For everything
 # =============================================================================
@@ -189,7 +211,7 @@ all = [df_1_avg, df_2_avg, df_3_avg, df_4_avg, df_5_avg, df_6_avg, df_7_avg ]
 df_all = []
 
 hour = 12 # Set hour
-day = 14 # Set day
+day = 17 # Set day
 month = 3 # Set month
 
 for i in range(7):
