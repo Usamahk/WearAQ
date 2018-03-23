@@ -13,7 +13,7 @@ import folium
 import os
 import timeit
 
-os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/data") # set directory
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/data/LAQN data") # set directory
 
 # =============================================================================
 # Important sites in and around Tower Hamlets
@@ -61,6 +61,9 @@ df = df_1
 
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
+
+#df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
                        df['times'].dt.month]).mean()
@@ -208,11 +211,11 @@ df_learn['Hour'] = datetime.apply(lambda x: x.hour)
 
 all = [df_1_avg, df_2_avg, df_3_avg, df_4_avg, df_5_avg, df_6_avg, df_7_avg ]
 
-df_all = []
-
 hour = 12 # Set hour
-day = 17 # Set day
+day = 31 # Set day
 month = 3 # Set month
+
+df_all = []
 
 for i in range(7):
     df_all.append(all[i].loc[(hour,day,month)])

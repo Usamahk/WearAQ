@@ -16,7 +16,7 @@ k.plot()
 new_loc = []
 
 # infill points to improve models accuracy
-for i in range(8):
+for i in range(3):
     newpoints = k.infill(1, method='error')
     for point in newpoints:
         k.addPoint(point, y[0])

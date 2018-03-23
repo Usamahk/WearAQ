@@ -14,10 +14,10 @@ from pyKriging import kriging
 # Set up the locations of the intial sensors from Tower Hamlets and Newham
 # =============================================================================
 
-# New Locations - Teviot Center - 51.518800, -0.013402
+# New Locations - Teviot Center - 51.492642, -0.007476
 
-loc_lon = -0.013402
-loc_lat = 51.518800
+loc_lon = -0.007476
+loc_lat = 51.492642
 
 location = np.array([loc_lon, loc_lat])
 
@@ -70,15 +70,15 @@ k.train(optimizer = optimizer)
 k.plot()
 
 # new locations
-# 51.514691, -0.008711
-# 51.513681, -0.014376
-# 51.518531, -0.016505
-# 51.520406, -0.010749
+# 51.494148, -0.008185
+# 51.494416, -0.005447
+# 51.490444, -0.008367
+# 51.490532, -0.003583
 
-X1 = [ -0.008711, 51.514691]
-X2 = [ -0.014376, 51.513681]
-X3 = [ -0.016505, 51.518531]
-X4 = [ -0.010749, 51.520406]
+X1 = [ -0.008185, 51.494148]
+X2 = [ -0.005447, 51.494416]
+X3 = [ -0.008367, 51.490444]
+X4 = [ -0.003583, 51.490532]
 
 ypred1 = k.predict(X1)
 ypred2 = k.predict(X2)
@@ -105,7 +105,7 @@ k.plot()
 new_loc = []
 
 # infill points to improve models accuracy
-for i in range(8):
+for i in range(3):
     newpoints = k.infill(1, method='error')
     for point in newpoints:
         print('Adding point {}'.format(point))
