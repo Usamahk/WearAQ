@@ -12,7 +12,6 @@ import seaborn as sns
 import folium
 
 workshop_1 = pd.read_csv("data/Workshop data/Workshop_1.csv", float_precision = 'round_trip')
-(51.510727, -0.006155)
 
 map_osm = folium.Map(location = [51.510727, -0.006155])
 workshop_1.apply(lambda row:folium.CircleMarker(location=[row["lat"], row["lon"]])
@@ -22,6 +21,9 @@ map_osm.save('data/Workshop data/map_w1.html')
 
 w1_clean = pd.read_csv("Workshop 1 - Perceptions - FINAL - Clean.csv",float_precision = 'high')
 w1 = pd.DataFrame(w1_clean)
+
+with pd.option_context('display.precision',10): # check precision
+    print(w1)
 
 """Locations
 
@@ -48,10 +50,38 @@ w1_loc.index += 1
 w1.loc[w1['lon'].isnull(),'lon'] = w1['Location'].map(w1_loc.lon)
 w1.loc[w1['lat'].isnull(),'lat'] = w1['Location'].map(w1_loc.lat)
 
+# =============================================================================
+# Plot for funsies
+# =============================================================================
+
 map_osm = folium.Map(location = [51.510727, -0.006155])
-w1.apply(lambda row:folium.CircleMarker(location=[row["lat"], row["lon"]])
+w1_map = w1
+w1_map['color']=pd.cut(w1_map['Location'],bins=6,labels=['yellow','green','blue','red','orange','purple'])
+w1_map['color']=pd.cut(w1_map['gesture'],bins=5,labels=['#0571b0','#92c5de','#f7f7f7','#f4a582','#ca0020'])
+
+
+w1.apply(lambda row:folium.CircleMarker(location=[row["lat"], row["lon"]],
+                                        color=row['color'],
+                                        zoom = 1)
                                              .add_to(map_osm), axis=1)
 
-with pd.option_context('display.precision',10):
-    print(w1)
+map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map_workshop3.html')
+
+['#fef0d9','#fdcc8a','#fc8d59','#e34a33','#b30000']
+
+
+# =============================================================================
+# Compare to prediction
+# =============================================================================
+
+w1['pred'] = np.nan
+
+for i in range(len(w1)):
+    X_loc = [w1.iloc[i,3],w1.iloc[i,4]]
+    w1.iloc[i,5] = k.predict(X_loc)
+
+
+
+
+
 
