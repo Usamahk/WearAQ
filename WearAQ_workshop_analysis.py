@@ -74,11 +74,26 @@ map_osm.save('/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/map_workshop3.html
 # Compare to prediction
 # =============================================================================
 
+w1_loc['pred'] = np.nan
+
+for i in range(len(w1_loc)):
+    X_loc = [w1_loc.iloc[i,1],w1_loc.iloc[i,0]]
+    w1_loc.iloc[i,2] = k.predict(X_loc) 
+
+w1_loc = np.array(w1_loc)
+ 
 w1['pred'] = np.nan
+w1['loc_pred'] = np.nan
 
 for i in range(len(w1)):
     X_loc = [w1.iloc[i,3],w1.iloc[i,4]]
     w1.iloc[i,5] = k.predict(X_loc)
+    w1.iloc[i,7] = w1_loc[(w1.iloc[i,1])-1,2]
+
+w1.to_csv("workshop_1.csv")
+
+    
+
 
 
 

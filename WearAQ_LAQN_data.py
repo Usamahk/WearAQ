@@ -211,8 +211,8 @@ df_learn['Hour'] = datetime.apply(lambda x: x.hour)
 
 all = [df_1_avg, df_2_avg, df_3_avg, df_4_avg, df_5_avg, df_6_avg, df_7_avg ]
 
-hour = 12 # Set hour
-day = 31 # Set day
+hour = 11 # Set hour
+day = 14 # Set day
 month = 3 # Set month
 
 df_all = []
