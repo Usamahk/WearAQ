@@ -1,5 +1,15 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Mar 23 12:48:51 2018
+
+@author: Usamahk
+"""
+
+import os
 import pandas as pd
 import numpy as np
+import folium
 from pyKriging import kriging
 
 from scipy.spatial import KDTree
@@ -8,14 +18,18 @@ from scipy.spatial import KDTree
 # Locations
 # =============================================================================
 
-# Read in locations - for this example using data from workshop 1. Can find data
-# in the 'data' folder
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/data")
+
+# Read airbeam data
 
 w_airbeam = pd.read_csv("WearAQ_workshop_1.xlsx - PM10.csv")
 w_airbeam = w_airbeam.drop(['Timestamp'], axis = 1)
 
-# Initialize workshop locations - in this example, here are the locations for
-# workshop 1
+# Extract Lon/lat in array
+
+coords = np.array([w_airbeam['geo:lat'],w_airbeam['geo:long']]).T
+
+# Initialize workshop locations
 
 locations = np.array([[-0.004744, 51.509824],
                       [-0.003672, 51.510358],
@@ -26,9 +40,7 @@ locations = np.array([[-0.004744, 51.509824],
 
 # Find closest readings  to locations
 
-coords = np.array([w_airbeam['geo:lat'],w_airbeam['geo:long']]).T # Extract Lon/lat in array
-
-tree = KDTree(coords) # set up k-d tree
+tree = KDTree(coords)
 num_readings = 1 # set number of readings to take
 
 nearest_neighbour = np.empty((0,3), int)
@@ -48,7 +60,7 @@ closest = closest.rename(columns = {0:'lat',1:'lon', 2:'Value'})
 X_init = np.array([closest['lat'],closest['lon']]).T
 y = np.array(closest['Value'])
 
-# clean by adding an offset point to artificially create a stronger pull
+# clean
 
 offset_lon1 = -0.000003
 
@@ -58,13 +70,16 @@ X=X_init
 
 for i in range(len(X_init)):
     lon1 = X_init[i,0] + offset_lon1
+    
     lat1 = X_init[i,1] + offset_lat1
+    
     loc1 = np.array([lon1,lat1])
     
     X = np.append(X,[loc1], axis=0)
     y = np.append(y,[y[i]])
    
-# Run through kriging model
+
+# Run through kriging
 
 optimizer = 'ga'
 
@@ -72,6 +87,7 @@ print('Setting up the Kriging Model')
 k = kriging(X, y)
 
 k.train(optimizer = optimizer)
+k.plot()
 
 new_loc = []
 
@@ -86,4 +102,20 @@ for i in range(3):
     new_loc.append({'lon':point[0],'lat':point[1]})
 
 new_loc = pd.DataFrame(new_loc)
+#########
 
+print('Now plotting final results...')
+k.plot() # plot with new points
+
+
+
+
+#plot to check
+
+closest = pd.DataFrame(nearest_neighbour)
+closest = closest.rename(columns = {0:'lat',1:'lon', 2:'Value'})
+
+map_osm = folium.Map(location = [51.509824,-0.004744])
+closest.apply(lambda row:folium.CircleMarker(location=[row['lon'], row['lat']])
+                                             .add_to(map_osm), axis=1)
+map_osm.save('w1_air.html')
