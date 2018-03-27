@@ -19,6 +19,8 @@ Found a few sources explaining this in a little more detail here:
 - The wiki: https://en.wikipedia.org/wiki/Kriging
 - A better explanation: http://gisgeography.com/kriging-interpolation-prediction/
 
+### WearAQ_model
+For the recommendation model that we want on the server, this file contains just the relevant code needed.
 
 ## Folders
 ### Sandbox
@@ -26,6 +28,7 @@ Just somewhere I play around with the data, with some incomplete ideas that I do
 
 ### Data
 Data from the LAQN - houses 7 datasets in and around tower hamlets
+Data from the workshops
 
 ### Images
 Images and maps generated from code in exp
