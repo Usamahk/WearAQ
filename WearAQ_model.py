@@ -45,20 +45,17 @@ for i in range(len(locations)):
 closest = pd.DataFrame(nearest_neighbour)
 closest = closest.rename(columns = {0:'lat',1:'lon', 2:'Value'})
 
-X_init = np.array([closest['lat'],closest['lon']]).T
+X = np.array([closest['lat'],closest['lon']]).T
 y = np.array(closest['Value'])
 
 # clean by adding an offset point to artificially create a stronger pull
 
 offset_lon1 = -0.000003
-
 offset_lat1 = -0.000001
 
-X=X_init
-
-for i in range(len(X_init)):
-    lon1 = X_init[i,0] + offset_lon1
-    lat1 = X_init[i,1] + offset_lat1
+for i in range(len(X)):
+    lon1 = X[i,0] + offset_lon1
+    lat1 = X[i,1] + offset_lat1
     loc1 = np.array([lon1,lat1])
     
     X = np.append(X,[loc1], axis=0)
