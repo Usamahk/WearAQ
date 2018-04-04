@@ -19,7 +19,7 @@ workshop_1.apply(lambda row:folium.CircleMarker(location=[row["lat"], row["lon"]
 
 map_osm.save('data/Workshop data/map_w1.html')
 
-w1_clean = pd.read_csv("Workshop 1 - Perceptions - FINAL - Clean.csv",float_precision = 'high')
+w1_clean = pd.read_csv("Workshop data/Workshop 1 - Perceptions - FINAL - Clean.csv",float_precision = 'high')
 w1 = pd.DataFrame(w1_clean)
 
 with pd.option_context('display.precision',10): # check precision
