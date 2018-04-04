@@ -62,11 +62,11 @@ df = df_1
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
-#df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
-
 df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
+#df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -85,7 +85,7 @@ df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
 df_2_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -104,7 +104,7 @@ df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
 df_3_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -123,7 +123,7 @@ df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
 df_4_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -142,7 +142,7 @@ df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
 df_5_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -161,7 +161,7 @@ df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
 df_6_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -180,10 +180,19 @@ df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
 df_7_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month]).mean()
+                       df['times'].dt.month,df['times'].dt.weekday]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
+
+# =============================================================================
+# Impute Missing data for each of the sensors
+# =============================================================================
+
+df_1_avg.describe() # check data
+
+df_1_avg.isnull().sum() # look at how many missing values there are
+
 # =============================================================================
 # Do regression so that we can get PM10 For everything
 # =============================================================================
