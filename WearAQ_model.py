@@ -28,15 +28,14 @@ locations = np.array([[-0.004744, 51.509824],
 
 coords = np.array([w_airbeam['geo:lat'],w_airbeam['geo:long']]).T # Extract Lon/lat in array
 
-tree = KDTree(coords) # set up k-d tree
-num_readings = 1 # set number of readings to take
+tree = KDTree(coords)
 
 nearest_neighbour = np.empty((0,3), int)
 
 for i in range(len(locations)):
-    idx = tree.query_ball_point([locations[i,0], locations[i,1]],r=0.0003)
-    temp = w_airbeam.iloc[idx]
-    temp = np.array(temp.tail(num_readings))
+    idx = tree.query([locations[i,0], locations[i,1]], k = 2)
+    temp = w_airbeam.iloc[idx[1]]
+    temp = np.array(temp.head(1))
     
     nearest_neighbour = np.append(nearest_neighbour, temp, axis = 0).astype(None)
 
