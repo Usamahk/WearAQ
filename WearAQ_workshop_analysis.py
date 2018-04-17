@@ -10,6 +10,11 @@ import pandas as pd
 import numpy as np
 import seaborn as sns
 import folium
+import os
+import glob
+
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/") # set directory
+
 
 workshop_1 = pd.read_csv("data/Workshop data/Workshop_1.csv", float_precision = 'round_trip')
 
@@ -91,6 +96,38 @@ for i in range(len(w1)):
     w1.iloc[i,7] = w1_loc[(w1.iloc[i,1])-1,2]
 
 w1.to_csv("workshop_1.csv")
+
+# =============================================================================
+# Workshop 1
+# =============================================================================
+
+
+os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0")
+
+filenames = os.listdir("data/Workshop Data/Workshop 1")
+
+for i in range(len(filenames)):
+    filenames[i] = "data/Workshop Data/Workshop 1/" + filenames[i]
+
+w1 = [pd.read_csv(filename, header = 2) for filename in filenames]
+
+for i in range(len(filenames)):
+    w1[i]["Timestamp"] = pd.to_datetime(w1[i].Timestamp)
+
+# =============================================================================
+# Workshop 2
+# =============================================================================
+
+filenames = os.listdir("data/Workshop Data/Workshop 2")
+print(filenames)
+
+for i in range(len(filenames)):
+    filenames[i] = "data/Workshop Data/Workshop 2/" + filenames[i]
+
+w2 = [pd.read_csv(filename, header = 2) for filename in filenames]
+
+for i in range(len(filenames)):
+    w2[i]["Timestamp"] = pd.to_datetime(w2[i].Timestamp)
 
     
 
