@@ -12,6 +12,15 @@ import seaborn as sns
 import folium
 import os
 import glob
+from pymc.Matplot import plot as mcplot
+from matplotlib import pyplot as plt
+import matplotlib as mpl
+from IPython.core.pylabtools import figsize
+
+import matplotlib.dates as md
+import datetime as dt
+import time
+
 
 os.chdir("/Users/Usamahk/Admin/Work/Umbrellium/WearAQ 2.0/") # set directory
 
@@ -97,6 +106,7 @@ for i in range(len(w1)):
 
 w1.to_csv("workshop_1.csv")
 
+
 # =============================================================================
 # Workshop 1
 # =============================================================================
@@ -114,6 +124,53 @@ w1 = [pd.read_csv(filename, header = 2) for filename in filenames]
 for i in range(len(filenames)):
     w1[i]["Timestamp"] = pd.to_datetime(w1[i].Timestamp)
 
+w1_temp = w1[0]
+
+w1_temp["Timestamp"].min()
+w1_temp["Timestamp"].max()
+
+x = np.linspace(0, len(w1_temp), len(w1_temp))
+
+plt.plot(w1[0].Timestamp[::20],((w1[0].Value[::20]-32)*5)/9, label = "Temperature")
+plt.plot(w1[1].Timestamp[::20],w1[1].Value[::20], label = "PM 2.5")
+plt.plot(w1[2].Timestamp[::20],w1[2].Value[::20], label = "Humidity")
+plt.legend(title="Pollutant", loc="upper right")
+plt.yscale('linear')
+axes = plt.gca()
+axes.set_ylim([0,100])
+plt.show()
+
+n=20
+timestamps=np.linspace(w1_temp["Timestamp"].min(), w1_temp["Timestamp"].max(), 20)
+dates=[dt.datetime.fromtimestamp(ts) for ts in timestamps]
+
+n=20
+duration = 1000
+
+now=time.mktime(time.localtime())
+timestamps=np.linspace(now,now+duration,n)
+
+for i in range(len(w1_temp)):
+    w1_temp.Timestamp[i] = time.mktime(w1_temp.Timestamp[i].timetuple())
+
+time.mktime(test.timetuple())
+
+values = w1_temp.Value
+
+plt.subplots_adjust(bottom=0.2)
+plt.xticks( rotation=25 )
+
+ax=plt.gca()
+
+xfmt = md.DateFormatter('%Y-%m-%d %H:%M:%S')
+ax.xaxis.set_major_formatter(xfmt)
+plt.plot(dates,values)
+plt.show()
+
+x = np.linspace(w1_temp["Timestamp"].min(), w1_temp["Timestamp"].max(), 100)
+
+plt.plot(x)
+
 # =============================================================================
 # Workshop 2
 # =============================================================================
@@ -129,7 +186,9 @@ w2 = [pd.read_csv(filename, header = 2) for filename in filenames]
 for i in range(len(filenames)):
     w2[i]["Timestamp"] = pd.to_datetime(w2[i].Timestamp)
 
-    
+w2_percep = pd.read_csv("data/Workshop data/Perception/W2_perception.csv",float_precision = 'high')
+
+w2_percep["timestamp"] = pd.to_datetime(w2_percep.timestamp)
 
 
 
