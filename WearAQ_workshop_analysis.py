@@ -190,8 +190,64 @@ w2_percep = pd.read_csv("data/Workshop data/Perception/W2_perception.csv",float_
 
 w2_percep["timestamp"] = pd.to_datetime(w2_percep.timestamp)
 
+# =============================================================================
+# Workshop 3
+# =============================================================================
+
+# Read in Airbeam data
+
+filenames = os.listdir("data/Workshop Data/Workshop 3")
+
+for i in range(len(filenames)):
+    # print(i, " - ", filenames[i])
+    filenames[i] = "data/Workshop Data/Workshop 3/" + filenames[i]
+
+w3 = [pd.read_csv(filename, header = 2) for filename in filenames]
+
+for i in range(len(filenames)):
+    w3[i]["Timestamp"] = pd.to_datetime(w3[i].Timestamp)
+    
+print()
+    
+# Read in the data
+w3_clean = pd.read_csv("data/Workshop data/Perception/W3_perception.csv",float_precision = 'high')
+w3_percep = pd.DataFrame(w3_clean)
+
+# Check the results
+# print(w3_percep.head(5))
+print("Airbeam V2 - a length -", len(w3[10]))
+print("Airbeam V2 - b length -", len(w3[13]))
+
+# =============================================================================
+# Workshop 4
+# =============================================================================
+
+# Read in Airbeam data
+
+filenames = os.listdir("data/Workshop Data/Workshop 4")
+
+for i in range(len(filenames)):
+    # print(i, " - ", filenames[i])
+    filenames[i] = "data/Workshop Data/Workshop 4/" + filenames[i]
+
+filenames = filenames[-5:]
+
+w4 = [pd.read_csv(filename, header = 2) for filename in filenames]
+
+for i in range(len(filenames)):
+    w4[i]["Timestamp"] = pd.to_datetime(w4[i].Timestamp)
+    w4[i] = w4[i].sort_values(by=['Timestamp'])
+    
+print()
+    
+# Read in the data
+w4_percep = pd.read_csv("data/Workshop data/Perception/W4_perception.csv",float_precision = 'high')
 
 
+# Check the results
+# print(w3_percep.head(5))
+print("Airbeam V2 - a length -", len(w3[10]))
+print("Airbeam V2 - b length -", len(w3[13]))
 
 
 
