@@ -62,11 +62,11 @@ df = df_1
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
-df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
-
 #df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-#                       df['times'].dt.month]).mean()
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
+df_1_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -84,8 +84,11 @@ df = df_2
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
+#df_2_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
 df_2_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -103,8 +106,11 @@ df = df_3
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
+#df_3_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
 df_3_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -122,8 +128,11 @@ df = df_4
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
+#df_4_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
 df_4_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -141,8 +150,11 @@ df = df_5
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
+#df_5_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
 df_5_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -160,8 +172,11 @@ df = df_6
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
+#df_6_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
 df_6_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -179,8 +194,11 @@ df = df_7
 df['times'] = pd.DatetimeIndex(df.index)
 df = df.reset_index(drop=True)
 
+#df_7_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
+#                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+
 df_7_avg = df.groupby([df['times'].dt.hour,df['times'].dt.day, 
-                       df['times'].dt.month,df['times'].dt.weekday]).mean()
+                       df['times'].dt.month]).mean()
 
 stop = timeit.default_timer()
 print(stop-start)
@@ -220,9 +238,10 @@ df_learn['Hour'] = datetime.apply(lambda x: x.hour)
 
 all = [df_1_avg, df_2_avg, df_3_avg, df_4_avg, df_5_avg, df_6_avg, df_7_avg ]
 
-hour = 11 # Set hour
-day = 14 # Set day
-month = 3 # Set month
+hour = 10 # Set hour
+day = 20 # Set day
+month = 4 # Set month
+#weekday = 4 # Set weekday
 
 df_all = []
 

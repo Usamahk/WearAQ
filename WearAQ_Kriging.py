@@ -21,6 +21,8 @@ loc_lat = 51.492642
 
 location = np.array([loc_lon, loc_lat])
 
+
+
 X_init = np.array([[ -0.008356,  51.515017],
        [ -0.042199,  51.522501],
        [ -0.019934,  51.510117],
@@ -28,6 +30,16 @@ X_init = np.array([[ -0.008356,  51.515017],
        [ -0.013047,  51.488903],
        [  0.014595,  51.514581],
        [ -0.002081,  51.537683]])
+
+# For the addition of the City of London sensor
+#X_init = np.array([[ -0.008356,  51.515017],
+#       [ -0.042199,  51.522501],
+#       [ -0.019934,  51.510117],
+#       [ -0.033470,  51.540364],
+#       [ -0.013047,  51.488903],
+#       [  0.014595,  51.514581],
+#       [ -0.002081,  51.537683],
+#       [ -0.077670,  51.513533]])
 
 # =============================================================================
 # Add dummy inputs
@@ -41,6 +53,7 @@ offset_lat2 = -0.0001
 
 X=X_init
 y = np.array(data_all['NO']) # saved in env - from WearAQ_LAQN_data
+#y = np.append(y, 38.8) - City of London sensor
 
 for i in range(len(X_init)):
     lon1 = X_init[i,0] + offset_lon1
@@ -100,7 +113,7 @@ y_new = np.array([ypred1,ypred2,ypred3])
 optimizer = 'ga'
 
 print('Setting up the Kriging Model')
-k = kriging(X_new, y_new)
+k = kriging(X, y)
 
 k.train(optimizer = optimizer)
 k.plot()
@@ -121,6 +134,61 @@ new_loc = pd.DataFrame(new_loc)
 
 print('Now plotting final results...')
 k.plot() # plot with new points
+
+# =============================================================================
+# Predictions for locations
+# Run this section to get the output of the model to compare and contrast
+# =============================================================================
+
+X=X_init
+y = np.array(data_all['NO2']) # saved in env - from WearAQ_LAQN_data
+
+for i in range(len(X_init)):
+    lon1 = X_init[i,0] + offset_lon1
+    lon2 = X_init[i,0] + offset_lon2
+    lat1 = X_init[i,1] + offset_lat1
+    lat2 = X_init[i,1] + offset_lat2
+    
+    loc1 = np.array([lon1,lat1])
+    loc2 = np.array([lon2,lat2])
+    
+    X = np.append(X,[loc1,loc2], axis=0)
+    y = np.append(y,[y[i],y[i]])
+
+
+# Run kriging
+    
+optimizer = 'ga'
+
+print('Setting up the Kriging Model')
+k = kriging(X, y)
+
+k.train(optimizer = optimizer)
+k.plot()
+
+# Locations - set this according to the locations you wish to output.
+
+X1 = [51.513165, -0.071385]
+X2 = [51.512873, -0.072538]
+X3 = [51.511493, -0.072265]
+X4 = [51.511957, -0.069203]
+X5 = [51.512866, -0.068837]
+X6 = [51.513313, -0.070054]
+X7 = [51.513576, -0.071512]
+X8 = [51.512856, -0.071320]
+
+perm = [1,0]
+
+ypred1 = k.predict([X1[i] for i in perm ])
+ypred2 = k.predict([X2[i] for i in perm ])
+ypred3 = k.predict([X3[i] for i in perm ])
+ypred4 = k.predict([X4[i] for i in perm ])
+ypred5 = k.predict([X5[i] for i in perm ])
+ypred6 = k.predict([X6[i] for i in perm ])
+ypred7 = k.predict([X7[i] for i in perm ])
+ypred8 = k.predict([X8[i] for i in perm ])
+
+ypred = [ypred1,ypred2,ypred3,ypred4,ypred5,ypred6,ypred7,ypred8]
 
 # =============================================================================
 # ## Results returned from a first pass
